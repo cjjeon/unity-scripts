@@ -13,6 +13,21 @@ internal enum MessageType
     AUDIO = 0
 }
 
+[Serializable]
+internal class AudioData
+{
+    public string type;
+    public int[] data;
+}
+
+
+[Serializable]
+internal class OnMessage<T>
+{
+    public MessageType messageType;
+    public T data;
+}
+
 public class WebSocketClient : MonoBehaviour
 {
     private AudioClip audioClip;
@@ -31,14 +46,19 @@ public class WebSocketClient : MonoBehaviour
         websocket.OnClose += e =>
         {
             Debug.Log("Connection closed! Reconnecting...");
-            websocket.Connect();
+            // websocket.Connect();
         };
 
         websocket.OnMessage += bytes =>
         {
             Debug.Log("OnMessage!");
-            Debug.Log(Application.persistentDataPath);
-            StartCoroutine(PlayAudio(bytes));
+            var jsonMessage = Encoding.UTF8.GetString(bytes);
+            var message = JsonUtility.FromJson<OnMessage<dynamic>>(jsonMessage);
+            if (message.messageType == MessageType.AUDIO)
+            {
+                var audioMessage = JsonUtility.FromJson<OnMessage<byte[]>>(jsonMessage);
+                StartCoroutine(PlayAudio(audioMessage.data));
+            }
         };
 
         // waiting for messages
