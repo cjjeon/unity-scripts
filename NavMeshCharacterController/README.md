@@ -9,3 +9,4 @@ You need Obstacle, Floor, and Character
 2. Click on the Floor and Obstacle, Go to `Navigation` -> `Object` Tab ->  Check Navigation Static -> Navigation Area (Not Walkable)
 3. Add `Nav Mesh Agent` to the character. Character should also have `Rigidbody` and `Capsule Collider`.
 4. Add Script to Player.
+5. Add Box Collider to Floor such that it's clickable
