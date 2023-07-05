@@ -10,3 +10,7 @@ You need Obstacle, Floor, and Character
 3. Add `Nav Mesh Agent` to the character. Character should also have `Rigidbody` and `Capsule Collider`.
 4. Add Script to Player.
 5. Add Box Collider to Floor such that it's clickable
+
+Adding Stopping Distance helps when character circle around the destination point
+
+
